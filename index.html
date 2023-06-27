@@ -1,24 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>You have reached this page too early</title>
+    <title>ERROR 404</title>
     <style>
+        @font-face {
+            font-family: 'Matrix';
+            src: url('matrix-font.woff2') format('woff2'),
+                 url('matrix-font.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
+            font-family: 'Matrix', Arial, sans-serif;
+            background-color: black;
+            color: #00FF00; /* Green color */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
         }
         
         h1 {
-            font-size: 24px;
+            font-size: 36px;
+            color: #00FF00; /* Green color */
         }
         
         p {
+            font-size: 24px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        
+        .subscript {
             font-size: 16px;
+            margin-top: -10px;
         }
     </style>
 </head>
 <body>
-    <h1>You have reached this page too early</h1>
-    <p>DeChozen1 is still making DeChozenWebpage</p>
+    <h1>ERROR 404</h1>
+    <p>You have reached this page way too early</p>
+    <p><span class="subscript">DeChozen1 is still making DeChozenWebpage</span></p>
 </body>
 </html>
