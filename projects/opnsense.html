@@ -1,1 +1,237 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OPNsense Firewall & Network | Siraj Hundal</title><link rel="stylesheet" href="project-styles.css"></head><body><header class="site-header"><nav class="nav container"><a class="brand" href="../index.html"><span>SH</span><strong>Siraj Hundal</strong></a><a class="back" href="../index.html#projects">← Back to projects</a></nav></header><main class="container"><section class="hero"><div class="eyebrow">ACTIVE</div><h1>OPNsense Firewall & Network</h1><p class="lede">Virtual firewall/router used to experiment with routing, DHCP, DNS, IDS/IPS and multi-gig networking.</p><div class="meta"><span class="tag">OPNsense</span><span class="tag">Routing</span><span class="tag">DHCP</span><span class="tag">IDS/IPS</span></div></section><section class="panel"><h2>Overview</h2><p>The OPNsense VM sits on the Dell T5810 and handles the routing/security layer. The lab has included interface and bridge configuration, DHCP/DNS work, monitoring and IDS/IPS testing while troubleshooting connectivity between the ISP, firewall, router and Proxmox management path.</p></section><section class="panel"><h2>Documentation</h2><p>More implementation notes, screenshots and lessons learned will be added as this project continues to evolve.</p><p class="note">No confidential work information is published here.</p></section><a class="button primary" href="https://github.com/DeChozen1" target="_blank" rel="noreferrer">GitHub profile ↗</a></main><footer class="site-footer container">© 2026 Siraj Hundal</footer></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>OPNsense Firewall & Network | Siraj Hundal</title>
+    <link rel="stylesheet" href="project-styles.css">
+</head>
+
+<body>
+
+<header class="site-header">
+    <nav class="nav container">
+        <a class="brand" href="../index.html">
+            <span>SH</span>
+            <strong>Siraj Hundal</strong>
+        </a>
+
+        <a class="back" href="../index.html#projects">
+            ← Back to projects
+        </a>
+    </nav>
+</header>
+
+
+<main class="container">
+
+    <section class="hero">
+        <div class="eyebrow">ACTIVE</div>
+
+        <h1>OPNsense Firewall & Network</h1>
+
+        <p class="lede">
+            Virtual firewall/router used to experiment with routing, DHCP,
+            DNS, IDS/IPS and multi-gig networking.
+        </p>
+
+        <div class="meta">
+            <span class="tag">OPNsense</span>
+            <span class="tag">Routing</span>
+            <span class="tag">DHCP</span>
+            <span class="tag">IDS/IPS</span>
+        </div>
+    </section>
+
+
+    <section class="panel">
+        <h2>Overview</h2>
+
+        <p>
+            The OPNsense VM sits on the Dell T5810 and handles the routing
+            and security layer of the homelab. The project has included
+            interface and bridge configuration, DHCP/DNS work, monitoring
+            and IDS/IPS testing while troubleshooting connectivity between
+            the ISP, firewall, router and Proxmox management path.
+        </p>
+    </section>
+
+
+    <section class="panel">
+        <h2>Documentation</h2>
+
+        <h3>OPNsense Passthrough Configuration</h3>
+
+        <p>
+            OPNsense is being prepared as the primary firewall and routing
+            layer for the homelab. The current configuration work has focused
+            on moving the network interfaces required by OPNsense through
+            Proxmox so the virtual firewall can directly handle the relevant
+            network connections.
+        </p>
+
+        <p>
+            The passthrough configuration has been completed at the
+            virtualisation layer, but the physical connections have not yet
+            been moved over for live testing.
+        </p>
+
+
+        <h3>Current Network Architecture</h3>
+
+        <p>
+            The planned network path places OPNsense between the ISP connection
+            and the main ASUS router. The Dell T5810 provides the virtualisation
+            platform, while the dedicated network interfaces are being assigned
+            to the firewall VM.
+        </p>
+
+        <p>
+            The current design is intended to provide a clear separation between
+            the Proxmox management connection and the interfaces used by the
+            OPNsense firewall.
+        </p>
+
+
+        <h3>Implementation</h3>
+
+        <ul>
+            <li>
+                Created the OPNsense virtual machine on Proxmox.
+            </li>
+
+            <li>
+                Configured the VM networking and required Proxmox interfaces.
+            </li>
+
+            <li>
+                Prepared the physical NICs for passthrough to the OPNsense VM.
+            </li>
+
+            <li>
+                Configured the required passthrough mapping within Proxmox.
+            </li>
+
+            <li>
+                Kept the Proxmox management interface separate from the
+                interfaces intended for OPNsense.
+            </li>
+
+            <li>
+                Prepared the environment for direct physical WAN/LAN testing.
+            </li>
+        </ul>
+
+
+        <h3>Planned Test</h3>
+
+        <p>
+            The next stage is to physically connect the network path and test
+            the complete firewall configuration rather than relying only on
+            the virtual configuration.
+        </p>
+
+        <p>
+            The planned test will verify whether OPNsense can successfully
+            receive the upstream connection, establish the LAN path and pass
+            traffic through to the ASUS router and connected clients.
+        </p>
+
+
+        <h3>What Will Be Tested</h3>
+
+        <ul>
+            <li>
+                WAN link detection and connectivity through OPNsense.
+            </li>
+
+            <li>
+                LAN connectivity from OPNsense to the downstream router.
+            </li>
+
+            <li>
+                DHCP and DNS behaviour through the new routing path.
+            </li>
+
+            <li>
+                Internet connectivity from client devices.
+            </li>
+
+            <li>
+                Proxmox management connectivity while the firewall is
+                operating as the network gateway.
+            </li>
+
+            <li>
+                IDS/IPS monitoring and traffic visibility once live traffic
+                is passing through the firewall.
+            </li>
+        </ul>
+
+
+        <h3>Current Status</h3>
+
+        <p>
+            Passthrough has been configured, but the physical network
+            cutover has not yet been performed. The firewall has therefore
+            not yet been validated as the live gateway for the homelab.
+        </p>
+
+        <p>
+            The next milestone is the physical connection and controlled
+            network test. The results of that test will be documented here,
+            including any routing, DHCP, DNS or connectivity issues discovered
+            during the cutover.
+        </p>
+
+
+        <h3>Lessons Learned So Far</h3>
+
+        <ul>
+            <li>
+                Virtual firewall projects require both correct VM configuration
+                and correct physical network connectivity.
+            </li>
+
+            <li>
+                Separating management networking from firewall interfaces makes
+                the Proxmox host easier to access during testing.
+            </li>
+
+            <li>
+                Passthrough configuration can be completed before the physical
+                cutover, allowing the network change to be tested in a
+                controlled manner.
+            </li>
+
+            <li>
+                The live test is necessary to validate the complete path from
+                the ISP connection through OPNsense to the internal network.
+            </li>
+        </ul>
+
+
+        <p class="note">
+            No confidential work information is published here. This
+            documentation describes my personal homelab environment and
+            implementation process.
+        </p>
+    </section>
+
+
+    <a class="button primary"
+       href="https://github.com/DeChozen1"
+       target="_blank"
+       rel="noreferrer">
+        GitHub profile ↗
+    </a>
+
+</main>
+
+
+<footer class="site-footer container">
+    © 2026 Siraj Hundal
+</footer>
+
+</body>
+</html>
