@@ -1,1 +1,212 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Proxmox Homelab | Siraj Hundal</title><link rel="stylesheet" href="project-styles.css"></head><body><header class="site-header"><nav class="nav container"><a class="brand" href="../index.html"><span>SH</span><strong>Siraj Hundal</strong></a><a class="back" href="../index.html#projects">← Back to projects</a></nav></header><main class="container"><section class="hero"><div class="eyebrow">ACTIVE</div><h1>Proxmox Homelab</h1><p class="lede">Core virtualisation environment on a Dell Precision T5810.</p><div class="meta"><span class="tag">Proxmox VE</span><span class="tag">Dell T5810</span><span class="tag">Virtualisation</span><span class="tag">10GbE</span></div></section><section class="panel"><h2>Overview</h2><p>Proxmox VE is the foundation of the lab. It hosts the virtual firewall/router, storage, Home Assistant and Linux test environments. The project is also where I learn through real troubleshooting: network bridges, NICs, VM connectivity and recovery workflows.</p></section><section class="panel"><h2>Documentation</h2><p>More implementation notes, screenshots and lessons learned will be added as this project continues to evolve.</p><p class="note">No confidential work information is published here.</p></section><a class="button primary" href="https://github.com/DeChozen1" target="_blank" rel="noreferrer">GitHub profile ↗</a></main><footer class="site-footer container">© 2026 Siraj Hundal</footer></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Proxmox Homelab | Siraj Hundal</title>
+    <link rel="stylesheet" href="project-styles.css">
+</head>
+
+<body>
+
+<header class="site-header">
+    <nav class="nav container">
+        <a class="brand" href="../index.html">
+            <span>SH</span>
+            <strong>Siraj Hundal</strong>
+        </a>
+
+        <a class="back" href="../index.html#projects">
+            ← Back to projects
+        </a>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <div class="eyebrow">ACTIVE</div>
+
+        <h1>Proxmox Homelab</h1>
+
+        <p class="lede">
+            Core virtualisation environment on a Dell Precision T5810.
+        </p>
+
+        <div class="meta">
+            <span class="tag">Proxmox VE</span>
+            <span class="tag">Dell T5810</span>
+            <span class="tag">Virtualisation</span>
+            <span class="tag">10GbE</span>
+        </div>
+    </section>
+
+
+    <section class="panel">
+        <h2>Overview</h2>
+
+        <p>
+            Proxmox VE is the foundation of the lab. It hosts the virtual
+            firewall/router, storage, Home Assistant and Linux test
+            environments. The project is also where I learn through real
+            troubleshooting: network bridges, NICs, VM connectivity and
+            recovery workflows.
+        </p>
+    </section>
+
+
+    <section class="panel">
+        <h2>Documentation</h2>
+
+        <h3>Proxmox Management NIC Connectivity Issue</h3>
+
+        <p>
+            During testing, the Proxmox management interface intermittently
+            lost network connectivity after extended periods of uptime.
+            The server itself remained running, but the Proxmox management
+            interface would become unreachable from the network.
+        </p>
+
+        <p>
+            Reconnecting the Ethernet cable temporarily restored connectivity.
+            This indicated that the issue needed to be investigated at the
+            network interface and link level rather than being treated as a
+            virtual machine failure.
+        </p>
+
+
+        <h3>Environment</h3>
+
+        <p>
+            The Proxmox host is a Dell Precision T5810 running an
+            Intel Xeon E5-2680 v4 with 64GB RAM. The onboard Ethernet
+            interface is used for Proxmox management, while the additional
+            10GbE NIC is used for the high-speed network configuration.
+        </p>
+
+
+        <h3>Investigation</h3>
+
+        <p>
+            I traced the connection from the physical Ethernet port through
+            the Linux network interface and Proxmox bridge configuration.
+            The onboard management NIC was confirmed as the interface
+            connected to the router, while the separate 10GbE interfaces
+            served the lab's high-speed networking requirements.
+        </p>
+
+        <ul>
+            <li>
+                Verified which physical NIC was being used for Proxmox management.
+            </li>
+
+            <li>
+                Checked the Linux network interface and link state.
+            </li>
+
+            <li>
+                Verified the Proxmox bridge and management network configuration.
+            </li>
+
+            <li>
+                Tested connectivity between the Proxmox host and the router.
+            </li>
+
+            <li>
+                Compared behaviour after physically reconnecting the Ethernet
+                connection.
+            </li>
+
+            <li>
+                Adjusted the network configuration so the management connection
+                would remain persistent instead of requiring manual cable
+                reconnection.
+            </li>
+        </ul>
+
+
+        <h3>Network Path</h3>
+
+        <p>
+            The management connection follows this path:
+        </p>
+
+        <p>
+            <strong>ASUS Router → Onboard NIC → Proxmox Network Bridge →
+            Proxmox Management Interface</strong>
+        </p>
+
+        <p>
+            This is kept separate from the additional 10GbE networking used
+            by the virtualised network infrastructure.
+        </p>
+
+
+        <h3>Result</h3>
+
+        <p>
+            After investigating and adjusting the network configuration,
+            the Proxmox management connection became stable without requiring
+            repeated physical reconnection of the Ethernet cable.
+        </p>
+
+        <p>
+            This troubleshooting process also reinforced the importance of
+            separating physical link issues, Linux interface state, bridge
+            configuration and virtual machine networking when diagnosing
+            Proxmox connectivity problems.
+        </p>
+
+
+        <h3>Lessons Learned</h3>
+
+        <ul>
+            <li>
+                Identify the physical NIC before troubleshooting the Proxmox
+                bridge or virtual machines.
+            </li>
+
+            <li>
+                Separate physical link problems from virtual networking problems.
+            </li>
+
+            <li>
+                Check the host's network state before assuming a VM or service
+                is responsible for the outage.
+            </li>
+
+            <li>
+                Network fixes should be persistent rather than relying on
+                physically reconnecting cables.
+            </li>
+
+            <li>
+                Keeping management networking separate from high-speed lab
+                networking makes troubleshooting easier.
+            </li>
+        </ul>
+
+
+        <p class="note">
+            No confidential work information is published here. This
+            documentation describes my personal homelab environment and
+            troubleshooting process.
+        </p>
+    </section>
+
+
+    <a class="button primary"
+       href="https://github.com/DeChozen1"
+       target="_blank"
+       rel="noreferrer">
+        GitHub profile ↗
+    </a>
+
+</main>
+
+<footer class="site-footer container">
+    © 2026 Siraj Hundal
+</footer>
+
+</body>
+</html>
