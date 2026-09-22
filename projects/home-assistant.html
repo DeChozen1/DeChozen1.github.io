@@ -1,71 +1,180 @@
-<section class="panel">
-    <h2>Documentation</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Home Assistant Smart Home | Siraj Hundal</title>
+    <link rel="stylesheet" href="project-styles.css">
+</head>
 
-    <h3>Local-First Home Assistant Platform</h3>
+<body>
 
-    <p>
-        Home Assistant is one of the main workloads in the homelab and is
-        designed around local control of smart-home devices rather than relying
-        on a single cloud ecosystem. The setup combines Zigbee, network-based
-        devices, ESP32 projects and automation through a central Home Assistant
-        interface.
-    </p>
+<header class="site-header">
+    <nav class="nav container">
+        <a class="brand" href="../index.html">
+            <span>SH</span>
+            <strong>Siraj Hundal</strong>
+        </a>
 
-    <h3>Home Assistant Virtualisation</h3>
+        <a class="back" href="../index.html#projects">
+            ← Back to projects
+        </a>
+    </nav>
+</header>
 
-    <p>
-        The primary Home Assistant instance is being moved into the Proxmox
-        environment on the Dell T5810, while a Raspberry Pi installation is
-        retained as a backup environment. This provides a practical recovery
-        path while the virtualised installation is being developed and tested.
-    </p>
+<main class="container">
 
-    <h3>Device Integration</h3>
+    <section class="hero">
+        <div class="eyebrow">ACTIVE</div>
 
-    <ul>
-        <li>
-            Zigbee devices integrated through Home Assistant using ZHA.
-        </li>
+        <h1>Home Assistant Smart Home</h1>
 
-        <li>
-            Sonoff Zigbee coordinator used for local Zigbee communication.
-        </li>
+        <p class="lede">
+            Local-first smart-home platform integrating Zigbee, IR/RF and
+            network devices for automation, dashboards, voice control and backup.
+        </p>
 
-        <li>
-            ESP32-based devices integrated into the Home Assistant environment.
-        </li>
+        <div class="meta">
+            <span class="tag">Home Assistant</span>
+            <span class="tag">Zigbee</span>
+            <span class="tag">IoT</span>
+            <span class="tag">ESP32</span>
+        </div>
+    </section>
 
-        <li>
-            Network-connected smart-home devices tested across the changing
-            homelab network.
-        </li>
+    <section class="panel">
+        <h2>Overview</h2>
 
-        <li>
-            Reolink cameras and other IoT devices reconnected after network
-            changes.
-        </li>
-    </ul>
+        <p>
+            Home Assistant is one of the main workloads in the homelab and is
+            designed around local control of smart-home devices rather than
+            relying on a single cloud ecosystem. The setup combines Zigbee,
+            network-based devices, ESP32 projects and automation through a
+            central Home Assistant interface.
+        </p>
+    </section>
 
-    <h3>Real Troubleshooting</h3>
+    <section class="panel">
+        <h2>Documentation</h2>
 
-    <p>
-        The project has also involved resolving real integration problems,
-        including Zigbee devices failing to re-pair, reconnecting ESP32
-        devices after network changes, restoring camera connectivity and
-        maintaining a usable backup Home Assistant environment.
-    </p>
+        <h3>Local-First Home Assistant Platform</h3>
 
-    <h3>Current Status</h3>
+        <p>
+            Home Assistant is one of the main workloads in the homelab and is
+            designed around local control of smart-home devices rather than
+            relying on a single cloud ecosystem. The setup combines Zigbee,
+            network-based devices, ESP32 projects and automation through a
+            central Home Assistant interface.
+        </p>
 
-    <p>
-        The Home Assistant environment is actively being developed as part of
-        the wider homelab. The focus is currently on improving reliability,
-        device integration, dashboards and the separation between the primary
-        virtualised instance and the backup Raspberry Pi installation.
-    </p>
+        <h3>Home Assistant Virtualisation</h3>
 
-    <p class="note">
-        No confidential work information is published here. This documentation
-        describes my personal smart-home environment and troubleshooting work.
-    </p>
-</section>
+        <p>
+            The primary Home Assistant instance is being developed within the
+            Proxmox environment on the Dell T5810, while a Raspberry Pi
+            installation is retained as a backup environment. This provides a
+            practical recovery path while the virtualised installation is being
+            developed and tested.
+        </p>
+
+        <h3>Device Integration</h3>
+
+        <ul>
+            <li>
+                Zigbee devices integrated through Home Assistant using ZHA.
+            </li>
+
+            <li>
+                Sonoff Zigbee coordinator used for local Zigbee communication.
+            </li>
+
+            <li>
+                ESP32-based devices integrated into the Home Assistant
+                environment.
+            </li>
+
+            <li>
+                Network-connected smart-home devices tested across the changing
+                homelab network.
+            </li>
+
+            <li>
+                Reolink cameras and other IoT devices reconnected after network
+                changes.
+            </li>
+        </ul>
+
+        <h3>Real Troubleshooting</h3>
+
+        <p>
+            The project has involved resolving real integration and connectivity
+            problems, including Zigbee devices failing to re-pair, reconnecting
+            ESP32 devices after network changes, restoring camera connectivity
+            and maintaining a usable backup Home Assistant environment.
+        </p>
+
+        <h3>Primary and Backup Environment</h3>
+
+        <p>
+            The Proxmox-hosted Home Assistant instance is being developed as
+            the primary environment, while the Raspberry Pi installation
+            provides a contingency option. This allows the smart-home
+            environment to remain recoverable while changes are being made
+            to the main virtualised system.
+        </p>
+
+        <h3>Current Status</h3>
+
+        <p>
+            The Home Assistant environment is actively being developed as part
+            of the wider homelab. Current work focuses on improving reliability,
+            device integration, dashboards and the separation between the
+            primary virtualised instance and the backup Raspberry Pi installation.
+        </p>
+
+        <h3>Lessons Learned So Far</h3>
+
+        <ul>
+            <li>
+                Local-first smart-home systems can bring devices from different
+                manufacturers into a single platform.
+            </li>
+
+            <li>
+                Network changes can affect multiple IoT integrations, making
+                systematic troubleshooting important.
+            </li>
+
+            <li>
+                Maintaining a backup Home Assistant environment provides a
+                recovery path while the primary system is being changed.
+            </li>
+
+            <li>
+                Smart-home reliability depends on both the application layer
+                and the underlying network infrastructure.
+            </li>
+        </ul>
+
+        <p class="note">
+            No confidential work information is published here. This
+            documentation describes my personal smart-home environment and
+            troubleshooting work.
+        </p>
+    </section>
+
+    <a class="button primary"
+       href="https://github.com/DeChozen1"
+       target="_blank"
+       rel="noreferrer">
+        GitHub profile ↗
+    </a>
+
+</main>
+
+<footer class="site-footer container">
+    © 2026 Siraj Hundal
+</footer>
+
+</body>
+</html>
