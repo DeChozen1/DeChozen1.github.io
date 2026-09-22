@@ -1,1 +1,218 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TrueNAS Virtual NAS | Siraj Hundal</title><link rel="stylesheet" href="project-styles.css"></head><body><header class="site-header"><nav class="nav container"><a class="brand" href="../index.html"><span>SH</span><strong>Siraj Hundal</strong></a><a class="back" href="../index.html#projects">← Back to projects</a></nav></header><main class="container"><section class="hero"><div class="eyebrow">BUILDING</div><h1>TrueNAS Virtual NAS</h1><p class="lede">Self-hosted storage project for learning local storage, ZFS and backups.</p><div class="meta"><span class="tag">TrueNAS</span><span class="tag">ZFS</span><span class="tag">NAS</span><span class="tag">Backups</span></div></section><section class="panel"><h2>Overview</h2><p>TrueNAS is being developed as the storage layer of the homelab, with the longer-term aim of reducing reliance on cloud storage subscriptions. The project is also a practical exercise in virtualised storage, networking and backup design.</p></section><section class="panel"><h2>Documentation</h2><p>More implementation notes, screenshots and lessons learned will be added as this project continues to evolve.</p><p class="note">No confidential work information is published here.</p></section><a class="button primary" href="https://github.com/DeChozen1" target="_blank" rel="noreferrer">GitHub profile ↗</a></main><footer class="site-footer container">© 2026 Siraj Hundal</footer></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>TrueNAS Virtual NAS | Siraj Hundal</title>
+    <link rel="stylesheet" href="project-styles.css">
+</head>
+
+<body>
+
+<header class="site-header">
+    <nav class="nav container">
+        <a class="brand" href="../index.html">
+            <span>SH</span>
+            <strong>Siraj Hundal</strong>
+        </a>
+
+        <a class="back" href="../index.html#projects">
+            ← Back to projects
+        </a>
+    </nav>
+</header>
+
+
+<main class="container">
+
+    <section class="hero">
+        <div class="eyebrow">BUILDING</div>
+
+        <h1>TrueNAS Virtual NAS</h1>
+
+        <p class="lede">
+            Self-hosted storage project for learning local storage, ZFS and backups.
+        </p>
+
+        <div class="meta">
+            <span class="tag">TrueNAS</span>
+            <span class="tag">ZFS</span>
+            <span class="tag">NAS</span>
+            <span class="tag">Backups</span>
+        </div>
+    </section>
+
+
+    <section class="panel">
+        <h2>Overview</h2>
+
+        <p>
+            TrueNAS is being developed as the storage layer of the homelab,
+            with the longer-term aim of reducing reliance on cloud storage
+            subscriptions. The project is also a practical exercise in
+            virtualised storage, networking and backup design.
+        </p>
+    </section>
+
+
+    <section class="panel">
+        <h2>Documentation</h2>
+
+        <h3>TrueNAS Virtual Machine Installation Issue</h3>
+
+        <p>
+            During the initial TrueNAS installation, the virtual machine
+            encountered multiple boot and console issues before the operating
+            system could be installed successfully.
+        </p>
+
+        <p>
+            The first issue occurred when attempting to boot the TrueNAS
+            installation media. The VM reported a UEFI
+            <strong>Access Denied</strong> error when attempting to boot from
+            the TrueNAS DVD.
+        </p>
+
+
+        <h3>UEFI and Secure Boot Investigation</h3>
+
+        <p>
+            The VM's UEFI configuration was investigated to determine whether
+            Secure Boot or the EFI configuration was preventing the TrueNAS
+            installer from starting correctly.
+        </p>
+
+        <p>
+            Changing the UEFI configuration alone did not resolve the boot
+            problem, so the EFI configuration was investigated further,
+            including recreating the EFI disk before continuing with the
+            installation attempt.
+        </p>
+
+
+        <h3>Installer Console Failure</h3>
+
+        <p>
+            After getting past the initial boot issue and selecting the
+            <strong>Install TrueNAS</strong> option, the installer console
+            became unusable. The display showed a corrupted-looking output
+            with vertical coloured lines and the installation appeared to
+            stop progressing.
+        </p>
+
+        <p>
+            This shifted the investigation away from the original UEFI boot
+            problem and towards the VM's virtual display and console
+            configuration.
+        </p>
+
+
+        <h3>Troubleshooting Process</h3>
+
+        <ul>
+            <li>
+                Investigated the UEFI boot failure and
+                <strong>Access Denied</strong> message.
+            </li>
+
+            <li>
+                Checked the VM's Secure Boot and EFI configuration.
+            </li>
+
+            <li>
+                Tested the TrueNAS installation media again after modifying
+                the VM's EFI configuration.
+            </li>
+
+            <li>
+                Selected the <strong>Install TrueNAS</strong> option and
+                investigated the resulting corrupted console output.
+            </li>
+
+            <li>
+                Checked the Proxmox VM console and display configuration.
+            </li>
+
+            <li>
+                Investigated changing the VM display from
+                <strong>Default</strong> to a
+                <strong>Serial terminal</strong> for troubleshooting.
+            </li>
+
+            <li>
+                Restarted the VM and repeated the installation process while
+                isolating the boot, display and console variables.
+            </li>
+        </ul>
+
+
+        <h3>Current Status</h3>
+
+        <p>
+            The TrueNAS installation is still being investigated. The current
+            focus is on identifying whether the installer failure is related
+            to the VM's virtual display/console configuration or the specific
+            TrueNAS installation environment.
+        </p>
+
+        <p>
+            Rather than treating the failed installation as a dead end, the
+            issue is being documented as part of the homelab build process.
+            A different TrueNAS version or installation configuration may be
+            tested if the current installation path continues to fail.
+        </p>
+
+
+        <h3>What This Demonstrates</h3>
+
+        <ul>
+            <li>
+                Troubleshooting virtual machine boot failures at the UEFI level.
+            </li>
+
+            <li>
+                Understanding the relationship between Secure Boot, EFI
+                configuration and virtualised operating-system installation.
+            </li>
+
+            <li>
+                Separating boot problems from operating-system installer
+                problems.
+            </li>
+
+            <li>
+                Investigating virtual display and console configuration when
+                an installer becomes visually corrupted or unresponsive.
+            </li>
+
+            <li>
+                Using controlled configuration changes to isolate the cause
+                of a virtualisation problem.
+            </li>
+        </ul>
+
+
+        <p class="note">
+            No confidential work information is published here. This
+            documentation describes my personal homelab environment and the
+            troubleshooting process.
+        </p>
+    </section>
+
+
+    <a class="button primary"
+       href="https://github.com/DeChozen1"
+       target="_blank"
+       rel="noreferrer">
+        GitHub profile ↗
+    </a>
+
+</main>
+
+
+<footer class="site-footer container">
+    © 2026 Siraj Hundal
+</footer>
+
+</body>
+</html>
