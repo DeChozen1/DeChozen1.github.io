@@ -1,1 +1,254 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>10Gb Home Network | Siraj Hundal</title><link rel="stylesheet" href="project-styles.css"></head><body><header class="site-header"><nav class="nav container"><a class="brand" href="../index.html"><span>SH</span><strong>Siraj Hundal</strong></a><a class="back" href="../index.html#projects">← Back to projects</a></nav></header><main class="container"><section class="hero"><div class="eyebrow">ACTIVE</div><h1>10Gb Home Network</h1><p class="lede">A real multi-gig home network built around a ViewQwest 10Gbps plan.</p><div class="meta"><span class="tag">10GbE</span><span class="tag">ViewQwest 10Gbps</span><span class="tag">OPNsense</span><span class="tag">ASUS BE7200X</span></div></section><section class="panel"><h2>Overview</h2><p>The current path is ViewQwest ONR/ONT in passthrough to a 10Gb NIC on the Dell T5810, where OPNsense is virtualised on Proxmox. OPNsense then routes to the ASUS BE7200X main router over 10GbE. The router also serves the Home Assistant backup Raspberry Pi and the Proxmox management connection from the T5810 onboard NIC.</p></section><section class="panel"><h2>Documentation</h2><p>More implementation notes, screenshots and lessons learned will be added as this project continues to evolve.</p><p class="note">No confidential work information is published here.</p></section><a class="button primary" href="https://github.com/DeChozen1" target="_blank" rel="noreferrer">GitHub profile ↗</a></main><footer class="site-footer container">© 2026 Siraj Hundal</footer></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>10Gb Home Network | Siraj Hundal</title>
+    <link rel="stylesheet" href="project-styles.css">
+</head>
+
+<body>
+
+<header class="site-header">
+    <nav class="nav container">
+        <a class="brand" href="../index.html">
+            <span>SH</span>
+            <strong>Siraj Hundal</strong>
+        </a>
+
+        <a class="back" href="../index.html#projects">
+            ← Back to projects
+        </a>
+    </nav>
+</header>
+
+
+<main class="container">
+
+    <section class="hero">
+        <div class="eyebrow">ACTIVE</div>
+
+        <h1>10Gb Home Network</h1>
+
+        <p class="lede">
+            A real multi-gig home network built around a ViewQwest 10Gbps plan.
+        </p>
+
+        <div class="meta">
+            <span class="tag">10GbE</span>
+            <span class="tag">ViewQwest 10Gbps</span>
+            <span class="tag">ASUS BE7200X</span>
+            <span class="tag">AiMesh</span>
+        </div>
+    </section>
+
+
+    <section class="panel">
+        <h2>Overview</h2>
+
+        <p>
+            This project documents the physical and wireless network surrounding
+            the homelab. The environment is built around a ViewQwest 10Gbps
+            connection, a primary ASUS BE7200X router and a second ASUS BE7200X
+            connected through AiMesh to extend coverage into the office area.
+        </p>
+
+        <p>
+            The flat also includes built-in Ethernet ports in multiple rooms,
+            with the room runs terminating at the central patch panel in the
+            network cabinet. This allows the network to use high-speed wired
+            backhaul throughout the home rather than depending solely on Wi-Fi.
+        </p>
+
+        <p>
+            The network also provides connectivity for the homelab, Home
+            Assistant devices, personal systems and other IoT equipment.
+            OPNsense is being introduced as the firewall and routing layer,
+            with its own project page covering that implementation in more
+            detail.
+        </p>
+    </section>
+
+
+    <section class="panel">
+        <h2>Documentation</h2>
+
+
+        <h3>ASUS AiMesh Setup</h3>
+
+        <p>
+            The wireless network uses two ASUS BE7200X routers. The primary
+            router provides the main Home network, while a second ASUS BE7200X
+            is connected through ASUS AiMesh and provides coverage for the
+            Office side of the environment.
+        </p>
+
+        <p>
+            Using the same router model across both locations keeps the
+            wireless environment within a single ASUS ecosystem while allowing
+            the second unit to extend coverage without requiring a separate
+            wireless platform.
+        </p>
+
+
+        <h3>Structured Cabling</h3>
+
+        <p>
+            One of the advantages of the flat is the built-in Ethernet cabling,
+            with network ports available in multiple rooms and the room runs
+            terminating at the central patch panel in the network cabinet.
+        </p>
+
+        <p>
+            This provides a wired backhaul between the cabinet and the rooms
+            rather than relying entirely on Wi-Fi. The installed cabling and
+            network path are capable of supporting multi-gigabit connectivity,
+            with the longer-term goal of making 10GbE available to suitable
+            wired devices where the connected hardware supports it.
+        </p>
+
+        <p>
+            This gives the network a combination of high-speed wired
+            connectivity and Wi-Fi coverage, allowing bandwidth-intensive
+            systems such as the homelab, desktops and other fixed devices to
+            use Ethernet while mobile and IoT devices remain on the wireless
+            network.
+        </p>
+
+
+        <h3>Network Layout</h3>
+
+        <p>
+            The network combines the high-speed wired homelab infrastructure
+            with the wireless network used by everyday devices. The ASUS
+            BE7200X units provide the main wireless access layer, while the
+            Dell T5810 and its networking hardware form the core homelab
+            infrastructure.
+        </p>
+
+        <p>
+            The Proxmox, OPNsense and TrueNAS projects document the individual
+            components in greater detail; this project focuses on how those
+            components fit into the wider home network.
+        </p>
+
+
+        <h3>Future Network Segmentation</h3>
+
+        <p>
+            One area being explored is the integration of an older Eero Max 7
+            into the environment. Several options are being considered,
+            including using it as a separate network or investigating whether
+            a bridged or extended configuration would make sense within the
+            existing topology.
+        </p>
+
+        <p>
+            No final decision has been made yet. The objective is to determine
+            whether the additional hardware can provide a useful role without
+            unnecessarily complicating the network.
+        </p>
+
+
+        <h3>Security Lab</h3>
+
+        <p>
+            Another possible future development is a deliberately separated
+            network for ethical hacking and security experimentation. The idea
+            is to keep test systems and potentially vulnerable lab machines
+            isolated from the main household environment while still allowing
+            controlled access when required.
+        </p>
+
+        <p>
+            This would provide a dedicated environment for security learning,
+            network testing and experimentation without mixing those systems
+            directly with everyday personal and smart-home devices.
+        </p>
+
+
+        <h3>Relationship to the OPNsense Project</h3>
+
+        <p>
+            OPNsense is being introduced as the firewall and routing layer of
+            the network, but the detailed passthrough and firewall
+            configuration is documented separately in the OPNsense project.
+            This page focuses on the wider physical network, wired
+            infrastructure, wireless coverage and future network design.
+        </p>
+
+
+        <h3>Current Status</h3>
+
+        <p>
+            The 10Gb internet connection, core home network and AiMesh setup
+            are in place. The built-in room Ethernet infrastructure also
+            provides a wired alternative to Wi-Fi for fixed devices throughout
+            the flat.
+        </p>
+
+        <p>
+            The OPNsense routing architecture is still being prepared for
+            physical testing. Future work will also focus on deciding how the
+            Eero Max 7 should be used and whether a separate security testing
+            network should be introduced into the overall topology.
+        </p>
+
+
+        <h3>Lessons Learned So Far</h3>
+
+        <ul>
+            <li>
+                A high-speed home network benefits from combining wired
+                infrastructure with wireless coverage rather than relying on
+                Wi-Fi alone.
+            </li>
+
+            <li>
+                A central patch panel makes it easier to manage and expand
+                wired connectivity between the network cabinet and individual
+                rooms.
+            </li>
+
+            <li>
+                Using matching wireless hardware simplifies extending coverage
+                across different areas of the home.
+            </li>
+
+            <li>
+                Network segmentation needs to balance security, performance
+                and operational complexity.
+            </li>
+
+            <li>
+                Additional hardware can be repurposed for dedicated
+                environments as the network evolves.
+            </li>
+        </ul>
+
+
+        <p class="note">
+            No confidential work information is published here. This
+            documentation describes my personal home network and future
+            infrastructure experiments.
+        </p>
+
+    </section>
+
+
+    <a class="button primary"
+       href="https://github.com/DeChozen1"
+       target="_blank"
+       rel="noreferrer">
+        GitHub profile ↗
+    </a>
+
+</main>
+
+
+<footer class="site-footer container">
+    © 2026 Siraj Hundal
+</footer>
+
+</body>
+</html>
