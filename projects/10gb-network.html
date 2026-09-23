@@ -73,6 +73,38 @@
     <section class="panel">
         <h2>Documentation</h2>
 
+        <p class="note">
+            <strong>Latest update — 23 September 2026:</strong>
+            Added secure remote access to the home network using WireGuard.
+            This page intentionally omits private addressing, endpoint details,
+            credentials, keys and other configuration data.
+        </p>
+
+
+        <h3>WireGuard Remote Access</h3>
+
+        <p>
+            A WireGuard VPN server has been configured on the primary ASUS
+            router to provide secure remote access to the private home network.
+            A dedicated client profile was created for a mobile device and
+            imported using the router's QR-based setup process.
+        </p>
+
+        <p>
+            The connection was tested successfully over mobile data, allowing
+            the device to reach selected services on the home network while
+            away from home. The VPN is intentionally user-initiated rather than
+            permanently enabled, so remote access is only established when it
+            is needed.
+        </p>
+
+        <p>
+            The public documentation does not include internal IP addresses,
+            public endpoints, usernames, private keys, QR codes or other
+            sensitive VPN configuration. Only the architecture and outcome of
+            the implementation are documented here.
+        </p>
+
 
         <h3>ASUS AiMesh Setup</h3>
 
@@ -188,10 +220,12 @@
         </p>
 
         <p>
-            The OPNsense routing architecture is still being prepared for
-            physical testing. Future work will also focus on deciding how the
-            Eero Max 7 should be used and whether a separate security testing
-            network should be introduced into the overall topology.
+            WireGuard remote access is now operational and has been verified
+            from outside the home network. The OPNsense routing architecture
+            is still being prepared for physical testing. Future work will
+            also focus on deciding how the Eero Max 7 should be used and
+            whether a separate security testing network should be introduced
+            into the overall topology.
         </p>
 
 
@@ -213,6 +247,12 @@
             <li>
                 Using matching wireless hardware simplifies extending coverage
                 across different areas of the home.
+            </li>
+
+            <li>
+                Secure remote access is useful for a homelab, but exposing
+                configuration details publicly is unnecessary and should be
+                avoided.
             </li>
 
             <li>
