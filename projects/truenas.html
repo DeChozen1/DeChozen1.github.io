@@ -146,21 +146,40 @@
         </ul>
 
 
-        <h3>Current Status</h3>
+        <h3>Current Status — 25 September 2026</h3>
 
         <p>
-            The TrueNAS installation is still being investigated. The current
-            focus is on identifying whether the installer failure is related
-            to the VM's virtual display/console configuration or the specific
-            TrueNAS installation environment.
+            The TrueNAS VM was removed after the installation issues. The storage
+            project is now exploring Nextcloud as a private, self-hosted alternative
+            for accessing personal files and large action-camera videos from an iPhone.
+        </p>
+
+        <h3>Nextcloud Appliance Setup</h3>
+
+        <ul>
+            <li>Imported the Nextcloud AIO virtual appliance into a new Proxmox VM.</li>
+            <li>Corrected the appliance's network interface configuration and confirmed that its web setup page loads.</li>
+            <li>Completed the initial setup steps and reached the domain configuration stage.</li>
+            <li>The appliance's built-in free domain registration was unavailable, so domain and HTTPS options are still being considered.</li>
+        </ul>
+
+        <h3>Access and Storage Plan</h3>
+
+        <p>
+            The intended access method is through the existing private VPN rather than
+            exposing the file service directly to the public internet. A regular Docker
+            deployment is being considered as an alternative to the AIO appliance, but
+            no switch has been made.
         </p>
 
         <p>
-            Rather than treating the failed installation as a dead end, the
-            issue is being documented as part of the homelab build process.
-            A different TrueNAS version or installation configuration may be
-            tested if the current installation path continues to fail.
+            The existing 4TB media drive has not been reformatted or integrated into
+            Nextcloud. Its current files must be preserved while a suitable storage
+            approach is planned.
         </p>
+
+        <p><strong>Next step:</strong> Decide whether to continue with Nextcloud AIO or
+        use a regular Docker deployment, then plan secure access and storage.</p>
 
 
         <h3>What This Demonstrates</h3>
