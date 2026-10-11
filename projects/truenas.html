@@ -61,13 +61,13 @@
         <ul>
             <li>Kept the intended remote access path on the existing WireGuard VPN rather than using public port forwarding or Cloudflare Tunnel.</li>
             <li>Checked the ASUS router: port forwarding is <strong>OFF</strong>, the forwarding table is empty, and DMZ is disabled.</li>
-            <li>Verified the HTTPS login page responds successfully. Remote access is intended to be through WireGuard, with no router port forwarding for ports 80 or 443.</li>
+            <li>Verified remote access from a phone using 4G/mobile data with the WireGuard tunnel enabled; the HTTPS Nextcloud login page loads successfully without router port forwarding.</li>
         </ul>
 
-        <h3>Current Status — 11 October 2026, 1:40 PM SGT (UTC+8)</h3>
+        <h3>Current Status — 11 October 2026, 1:45 PM SGT (UTC+8)</h3>
         <p><strong>Working:</strong> Nextcloud AIO, Caddy reverse proxy, Let's Encrypt HTTPS certificate, and the Nextcloud login page at <code>https://cloud.dechozen1.stream</code>. Caddy is enabled as a systemd service and starts automatically.</p>
         <p><strong>Network posture:</strong> ASUS port forwarding is disabled and DMZ is off. The intended remote route is the existing WireGuard VPN.</p>
-        <p><strong>Still to do:</strong> Confirm access from a phone on mobile data with WireGuard connected, then plan how to make the existing 4TB media drive available without modifying or losing its current files.</p>
+        <p><strong>Still to do:</strong> Plan how to make the existing 4TB media drive available without modifying or losing its current files.</p>
     </section>
 
     <section class="panel">
