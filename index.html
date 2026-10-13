@@ -44,21 +44,36 @@
       </div>
       <section class="hero-terminal batcave-terminal" aria-label="Interactive Batcave terminal">
         <div class="terminal-top"><span></span><span></span><span></span><small>siraj@batcave:~</small><span class="terminal-live">SESSION READY</span></div>
-        <div class="terminal-welcome"><p class="eyebrow">BATCAVE ACCESS // VISITOR MODE</p><h2>Welcome to the Batcave.</h2><p>Choose a mission below, or type a command if you're feeling terminally curious.</p></div>
-        <div class="terminal-actions" aria-label="Quick commands">
-          <button type="button" data-terminal-command="whoami">👤 Who am I?</button>
-          <button type="button" data-terminal-command="projects">🛠️ Explore projects</button>
-          <button type="button" data-terminal-command="homelab">🖥️ Explore homelab</button>
-          <button type="button" data-terminal-command="certs">🔐 Certification roadmap</button>
-          <button type="button" data-terminal-command="coffee">☕ Coffee status</button>
+        <div class="terminal-output" id="terminal-output" aria-live="polite">
+          <p><span class="terminal-prompt">visitor@batcave:~$</span> whoami</p>
+          <p>IDENTITY CONFIRMED</p>
+          <p>Siraj Hundal · IT Support / Systems Administration</p>
+          <p>Building practical experience in infrastructure, cloud and security.</p>
+          <p>MISSION STATUS: IN PROGRESS</p>
+          <p><span class="terminal-prompt">visitor@batcave:~$</span> projects</p>
+          <p>OPENING PROJECT ARCHIVE...</p>
+          <p>Proxmox Homelab · OPNsense · Nextcloud NAS · Home Assistant · 10Gb Home Network</p>
+          <p>Jumping to the project cards below.</p>
+          <p><span class="terminal-prompt">visitor@batcave:~$</span> homelab</p>
+          <p>SCANNING BATCAVE MAP...</p>
+          <p>Proxmox VE · OPNsense · Nextcloud NAS · Home Assistant · Linux VMs</p>
+          <p>Select a device in the interactive topology further down the page.</p>
+          <p><span class="terminal-prompt">visitor@batcave:~$</span> coffee</p>
+          <p>ERROR 418: I'M A TEAPOT.</p>
+          <p>Human operator may require coffee maintenance.</p>
+          <p>Critical dependency: probably.</p>
+          <p><span class="terminal-prompt">visitor@batcave:~$</span> whoami</p>
+          <p>IDENTITY CONFIRMED</p>
+          <p>Siraj Hundal · IT Support / Systems Administration</p>
+          <p>Building practical experience in infrastructure, cloud and security.</p>
+          <p>MISSION STATUS: IN PROGRESS</p>
+          <p>Commands: <strong>help</strong>, <strong>whoami</strong>, <strong>projects</strong>, <strong>homelab</strong>, <strong>certs</strong>, <strong>status</strong>, <strong>coffee</strong>, <strong>sudo batman</strong></p>
         </div>
-        <div class="terminal-output" id="terminal-output" aria-live="polite"><p><span class="terminal-prompt">visitor@batcave:~$</span> help</p><p>Commands: <strong>help</strong>, <strong>whoami</strong>, <strong>projects</strong>, <strong>homelab</strong>, <strong>certs</strong>, <strong>status</strong>, <strong>coffee</strong>, <strong>sudo batman</strong>.</p></div>
         <form class="terminal-input-row" id="terminal-form">
           <label for="terminal-input"><span class="terminal-prompt">visitor@batcave:~$</span></label>
           <input id="terminal-input" name="command" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type a command..." aria-label="Enter a Batcave command" />
           <button type="submit">Run ↵</button>
         </form>
-        <p class="terminal-footnote">SIMULATED TERMINAL · No commands run on the actual homelab.</p>
       </section>
     </section>
 
