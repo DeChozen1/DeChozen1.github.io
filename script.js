@@ -69,6 +69,7 @@ topologyNodes.forEach(node => {
     const command = raw.trim().toLowerCase().replace(/\s+/g, " ");
     if (!command) return;
     const lines = responses[command];
+    output.replaceChildren();
     const add = (text, className) => {
       const p = document.createElement("p");
       if (className) p.className = className;
