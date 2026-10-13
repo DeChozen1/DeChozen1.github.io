@@ -63,7 +63,7 @@ topologyNodes.forEach(node => {
     certs: ["CAREER ROADMAP", "[01] SC-300 · Identity and Access Administrator", "[02] AZ-104 · Azure Administrator", "Objective: move from IT support toward cloud and security engineering."],
     status: ["BATCAVE STATUS (PORTFOLIO DATA, NOT LIVE MONITORING)", "Proxmox: documented · OPNsense: documented · Nextcloud NAS: operational project", "Live server health is not connected to this website."],
     coffee: ["ERROR 418: I'M A TEAPOT.", "Human operator may require coffee maintenance.", "Critical dependency: probably."],
-    "sudo batman": ["AUTHENTICATING...", "IDENTITY CONFIRMED: THE TECH KNIGHT.", "MISSION: secure the infrastructure, fix the network, investigate the incident.", "WARNING: someone has discovered the homelab power switch.", "Good luck, Siraj. 🦇"]
+    "sudo batman": ["AUTHENTICATING...", "IDENTITY CONFIRMED: THE TECH KNIGHT.", "MISSION: Eliminate threats to homelab, establish constant uptime and serve justice to my client devices.", "WARNING: BREACH DETECTED. OVERRIDE INITIATED.", "visitor@batcave:~$ sudo rm -rf /", "ACCESS DENIED: BATCAVE SELF-DESTRUCT DISABLED.", "🦇 SYSTEM DEFENCE: ENGAGED"]
   };
   function runCommand(raw) {
     const command = raw.trim().toLowerCase().replace(/\s+/g, " ");
