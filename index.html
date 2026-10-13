@@ -42,21 +42,24 @@
           <span>🔐 Cybersecurity: Investigating</span>
         </div>
       </div>
-      <div class="hero-terminal" aria-label="Current lab focus">
-        <div class="terminal-top"><span></span><span></span><span></span><small>siraj@homelab:~</small></div>
-        <pre><code><span class="muted">$</span> whoami
-siraj.hundal
-
-<span class="muted">$</span> cat current_focus.txt
-Proxmox + OPNsense
-Nextcloud NAS + 10Gb networking
-Home Assistant / IoT
-Linux environments
-Security labs
-
-<span class="muted">$</span> uptime
-building, testing, learning</code></pre>
-      </div>
+      <section class="hero-terminal batcave-terminal" aria-label="Interactive Batcave terminal">
+        <div class="terminal-top"><span></span><span></span><span></span><small>siraj@batcave:~</small><span class="terminal-live">SESSION READY</span></div>
+        <div class="terminal-welcome"><p class="eyebrow">BATCAVE ACCESS // VISITOR MODE</p><h2>Welcome to the Batcave.</h2><p>Choose a mission below, or type a command if you're feeling terminally curious.</p></div>
+        <div class="terminal-actions" aria-label="Quick commands">
+          <button type="button" data-terminal-command="whoami">👤 Who am I?</button>
+          <button type="button" data-terminal-command="projects">🛠️ Explore projects</button>
+          <button type="button" data-terminal-command="homelab">🖥️ Explore homelab</button>
+          <button type="button" data-terminal-command="certs">🔐 Certification roadmap</button>
+          <button type="button" data-terminal-command="coffee">☕ Coffee status</button>
+        </div>
+        <div class="terminal-output" id="terminal-output" aria-live="polite"><p><span class="terminal-prompt">visitor@batcave:~$</span> help</p><p>Commands: <strong>help</strong>, <strong>whoami</strong>, <strong>projects</strong>, <strong>homelab</strong>, <strong>certs</strong>, <strong>status</strong>, <strong>coffee</strong>, <strong>sudo batman</strong>.</p></div>
+        <form class="terminal-input-row" id="terminal-form">
+          <label for="terminal-input"><span class="terminal-prompt">visitor@batcave:~$</span></label>
+          <input id="terminal-input" name="command" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type a command..." aria-label="Enter a Batcave command" />
+          <button type="submit">Run ↵</button>
+        </form>
+        <p class="terminal-footnote">SIMULATED TERMINAL · No commands run on the actual homelab.</p>
+      </section>
     </section>
 
     <section class="section container" id="projects">
