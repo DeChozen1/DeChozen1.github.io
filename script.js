@@ -48,3 +48,54 @@ topologyNodes.forEach(node => {
     link.textContent = item.label + " →";
   });
 });
+
+/* Batcave terminal: simulated commands only, no server access */
+(() => {
+  const form = document.getElementById("terminal-form");
+  const input = document.getElementById("terminal-input");
+  const output = document.getElementById("terminal-output");
+  if (!form || !input || !output) return;
+  const responses = {
+    help: ["Available commands: help, whoami, projects, homelab, certs, status, coffee, sudo batman.", "Tip: tap one of the mission buttons above to explore without typing."],
+    whoami: ["IDENTITY CONFIRMED", "Siraj Hundal · IT Support / Systems Administration", "Building practical experience in infrastructure, cloud and security.", "MISSION STATUS: IN PROGRESS"],
+    projects: ["OPENING PROJECT ARCHIVE...", "Proxmox Homelab · OPNsense · Nextcloud NAS · Home Assistant · 10Gb Home Network", "Jumping to the project cards below."],
+    homelab: ["SCANNING BATCAVE MAP...", "Proxmox VE · OPNsense · Nextcloud NAS · Home Assistant · Linux VMs", "Select a device in the interactive topology further down the page."],
+    certs: ["CAREER ROADMAP", "[01] SC-300 · Identity and Access Administrator", "[02] AZ-104 · Azure Administrator", "Objective: move from IT support toward cloud and security engineering."],
+    status: ["BATCAVE STATUS (PORTFOLIO DATA, NOT LIVE MONITORING)", "Proxmox: documented · OPNsense: documented · Nextcloud NAS: operational project", "Live server health is not connected to this website."],
+    coffee: ["ERROR 418: I'M A TEAPOT.", "Human operator may require coffee maintenance.", "Critical dependency: probably."],
+    "sudo batman": ["AUTHENTICATING...", "IDENTITY CONFIRMED: THE TECH KNIGHT.", "MISSION: secure the infrastructure, fix the network, investigate the incident.", "WARNING: someone has discovered the homelab power switch.", "Good luck, Siraj. 🦇"]
+  };
+  function runCommand(raw) {
+    const command = raw.trim().toLowerCase().replace(/\s+/g, " ");
+    if (!command) return;
+    const lines = responses[command];
+    const add = (text, className) => {
+      const p = document.createElement("p");
+      if (className) p.className = className;
+      p.textContent = text;
+      output.appendChild(p);
+    };
+    add("visitor@batcave:~$ " + command, "terminal-command-line");
+    if (!lines) {
+      add("Command not found. Type 'help' to see the available commands.");
+    } else {
+      lines.forEach(line => add(line));
+    }
+    output.scrollTop = output.scrollHeight;
+    if (command === "projects") {
+      document.getElementById("projects")?.scrollIntoView({behavior:"smooth",block:"start"});
+    } else if (command === "homelab") {
+      document.getElementById("lab")?.scrollIntoView({behavior:"smooth",block:"start"});
+    } else if (command === "certs") {
+      document.getElementById("roadmap")?.scrollIntoView({behavior:"smooth",block:"start"});
+    }
+  }
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+    runCommand(input.value);
+    input.value = "";
+  });
+  document.querySelectorAll("[data-terminal-command]").forEach(button => {
+    button.addEventListener("click", () => runCommand(button.dataset.terminalCommand));
+  });
+})();
