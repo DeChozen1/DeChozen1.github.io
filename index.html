@@ -170,7 +170,7 @@ building, testing, learning</code></pre>
           <p>Physical and virtual layers shown together.</p>
         </div>
         <div class="architecture">
-          <div class="node uplink"><small>ISP UPLINK</small><strong>ViewQwest 10Gbps</strong><em>10Gb home plan</em></div>
+          <button type="button" class="node uplink topology-node" data-system="isp" aria-pressed="false"><small>ISP UPLINK</small><strong>ViewQwest 10Gbps</strong><em>10Gb home plan</em></button>
           <div class="flow-line"><span>ONR / ONT → passthrough</span></div>
 
           <div class="host-shell">
@@ -179,11 +179,11 @@ building, testing, learning</code></pre>
               <span class="host-badge">CORE LAB</span>
             </div>
             <div class="host-grid">
-              <div class="node firewall-inner"><small>VIRTUAL FIREWALL / ROUTER</small><strong>OPNsense</strong><em>WAN + LAN · Routing · DHCP · DNS · IDS/IPS</em></div>
-              <div class="node service"><small>VIRTUAL SERVICES</small><strong>Nextcloud NAS</strong><em>Nextcloud AIO · External 4TB media · Planned backup</em></div>
-              <div class="node service"><small>VIRTUAL SERVICES</small><strong>Home Assistant</strong><em>Primary HA environment</em></div>
-              <div class="node service"><small>LAB</small><strong>Linux VMs</strong><em>Ubuntu · Kali · testing</em></div>
-              <div class="node management"><small>MANAGEMENT</small><strong>Proxmox Management</strong><em>Onboard NIC → ASUS router</em></div>
+              <button type="button" class="node firewall-inner topology-node" data-system="opnsense" aria-pressed="false"><small>VIRTUAL FIREWALL / ROUTER</small><strong>OPNsense</strong><em>WAN + LAN · Routing · DHCP · DNS · IDS/IPS</em></button>
+              <button type="button" class="node service topology-node" data-system="nextcloud" aria-pressed="false"><small>VIRTUAL SERVICES</small><strong>Nextcloud NAS</strong><em>Nextcloud AIO · External 4TB media · Planned backup</em></button>
+              <button type="button" class="node service topology-node" data-system="ha" aria-pressed="false"><small>VIRTUAL SERVICES</small><strong>Home Assistant</strong><em>Primary HA environment</em></button>
+              <button type="button" class="node service topology-node" data-system="linux" aria-pressed="false"><small>LAB</small><strong>Linux VMs</strong><em>Ubuntu · Kali · testing</em></button>
+              <button type="button" class="node management topology-node" data-system="proxmox" aria-pressed="false"><small>MANAGEMENT</small><strong>Proxmox Management</strong><em>Onboard NIC → ASUS router</em></button>
             </div>
           </div>
 
@@ -194,16 +194,28 @@ building, testing, learning</code></pre>
           </div>
 
           <div class="flow-line"><span>10GbE LAN</span></div>
-          <div class="node router"><small>MAIN ROUTER</small><strong>ASUS BE7200X</strong><em>Home network gateway</em></div>
+          <button type="button" class="node router topology-node" data-system="router" aria-pressed="false"><small>MAIN ROUTER</small><strong>ASUS BE7200X</strong><em>Home network gateway</em></button>
 
           <div class="router-branches">
-            <div class="node compact"><small>AIMESH</small><strong>Secondary ASUS Router</strong><em>ASUS AiMesh connection</em></div>
-            <div class="node compact"><small>BACKUP</small><strong>Home Assistant Raspberry Pi</strong><em>Backup HA environment</em></div>
-            <div class="node compact"><small>HOME NETWORK</small><strong>Client Devices</strong><em>2.5Gb / 1Gb endpoints</em></div>
+            <button type="button" class="node compact topology-node" data-system="aimesh" aria-pressed="false"><small>AIMESH</small><strong>Secondary ASUS Router</strong><em>ASUS AiMesh connection</em></button>
+            <button type="button" class="node compact topology-node" data-system="pi" aria-pressed="false"><small>BACKUP</small><strong>Home Assistant Raspberry Pi</strong><em>Backup HA environment</em></button>
+            <button type="button" class="node compact topology-node" data-system="clients" aria-pressed="false"><small>HOME NETWORK</small><strong>Client Devices</strong><em>2.5Gb / 1Gb endpoints</em></button>
           </div>
         </div>
       </div>
 
+
+        <div class="topology-details" id="topology-details" aria-live="polite">
+          <div>
+            <p class="eyebrow">SELECT A COMPONENT</p>
+            <h3 id="topology-detail-title">Explore the Batcave</h3>
+            <p id="topology-detail-copy">Tap any highlighted device in the topology to see its role, how it connects, and what you're building around it.</p>
+          </div>
+          <div class="topology-detail-meta">
+            <span id="topology-detail-role">INTERACTIVE MAP</span>
+            <a id="topology-detail-link" href="#projects">Explore related project →</a>
+          </div>
+        </div>
       <div class="physical-section">
         <div class="physical-copy">
           <p class="eyebrow">PHYSICAL LAYER</p>
