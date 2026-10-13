@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>TrueNAS Virtual NAS | Siraj Hundal</title>
+    <meta name="description" content="Build log for a Proxmox-hosted Nextcloud AIO private cloud, external 4TB media storage, remote access and planned independent backup.">
+    <title>Private Cloud Storage | Siraj Hundal</title>
     <link rel="stylesheet" href="project-styles.css">
 </head>
 
@@ -17,22 +18,24 @@
 
 <main class="container">
     <section class="hero">
-        <div class="eyebrow">ACTIVE · NEXTCLOUD</div>
+        <div class="eyebrow">OPERATIONAL · NEXTCLOUD</div>
         <h1>Private Cloud Storage</h1>
-        <p class="lede">Replacing cloud-storage dependence with a self-hosted Nextcloud service running on Proxmox, with HTTPS and private VPN access.</p>
+        <p class="lede">A self-hosted Nextcloud AIO service running on Proxmox, with HTTPS, private remote access and an existing 4TB media drive exposed as external storage. The next phase is cloud-data migration and a separate backup drive.</p>
         <div class="meta">
             <span class="tag">Proxmox VE</span>
             <span class="tag">Nextcloud AIO</span>
             <span class="tag">Caddy</span>
             <span class="tag">Cloudflare DNS</span>
             <span class="tag">WireGuard</span>
+            <span class="tag">SMB / CIFS</span>
         </div>
     </section>
 
     <section class="panel">
         <h2>Overview</h2>
         <p>The original plan was to run a virtual TrueNAS NAS for storage, backups and local file access. After troubleshooting repeated UEFI and virtual-console installation issues, the TrueNAS VM was removed and the project shifted to Nextcloud AIO for private file access, including large action-camera videos from an iPhone.</p>
-        <p>The Nextcloud AIO instance now runs in an Ubuntu Server VM on Proxmox. The existing 4TB media drive has not been reformatted or integrated into Nextcloud; its files must be preserved while the storage design is planned.</p>
+        <p>The Nextcloud AIO instance runs in an Ubuntu Server VM on Proxmox. The core Nextcloud service, HTTPS endpoint and AIO containers have been brought up successfully. The existing 4TB media drive is mounted separately and exposed through Nextcloud External Storage, without reformatting the disk.</p>
+        <p><strong>Current milestone:</strong> Core private-cloud service operational. OneDrive and Google Drive data migration remains pending. An independent backup or redundancy design is not yet complete, so this is not yet a fully backed-up storage system.</p>
     </section>
 
     <section class="panel">
@@ -44,8 +47,9 @@
         <h3>Nextcloud AIO Deployment</h3>
         <ul>
             <li>Imported and configured the Nextcloud AIO appliance in an Ubuntu Server VM on Proxmox.</li>
-            <li>Set the AIO data directory to <code>/mnt/ncdata</code> and exposed its Apache backend on port <code>11000</code> for the reverse proxy.</li>
-            <li>Configured the local hostname <code>cloud.dechozen1.stream</code> to resolve to the VM on the home network.</li>
+            <li>Configured the AIO data directory as <code>/mnt/ncdata</code> and exposed its Apache backend on port <code>11000</code> for the reverse proxy.</li>
+            <li>Configured <code>cloud.dechozen1.stream</code> for Nextcloud access.</li>
+            <li>Confirmed the AIO application containers were healthy after a stop/start through the AIO interface.</li>
         </ul>
 
         <h3>HTTPS, Caddy and Cloudflare DNS Challenge</h3>
@@ -53,21 +57,46 @@
             <li>Installed a custom Caddy build with the Cloudflare DNS provider plugin and configured Caddy to reverse-proxy requests to Nextcloud AIO.</li>
             <li>Initial certificate attempts failed because the DNS provider tried to identify the zone as <code>stream.</code> instead of <code>dechozen1.stream</code>.</li>
             <li>Added <code>resolvers 1.1.1.1</code> to the Caddy TLS configuration. The DNS-01 challenge then succeeded and Let's Encrypt issued the certificate.</li>
-            <li>Caddy's systemd service still exited immediately. Troubleshooting showed <code>/etc/caddy</code> was root-only (<code>700</code>), preventing the <code>caddy</code> service account from reading its configuration. Changed the directory to <code>root:caddy</code> with mode <code>750</code>, and the Caddyfile to <code>root:caddy</code> with mode <code>640</code>. The Cloudflare token remains in a root-protected environment file loaded by systemd.</li>
-            <li>Confirmed Caddy listens on ports <code>80</code> and <code>443</code>, while the Nextcloud AIO backend remains on <code>11000</code>. HTTPS returns a redirect to the Nextcloud login page.</li>
+            <li>Fixed Caddy service access to its configuration by setting <code>/etc/caddy</code> to <code>root:caddy</code> mode <code>750</code> and the Caddyfile to <code>root:caddy</code> mode <code>640</code>. The Cloudflare token remains in a root-protected environment file loaded by systemd.</li>
+            <li>Confirmed Caddy listens on ports <code>80</code> and <code>443</code>, while the Nextcloud AIO backend remains on <code>11000</code>. HTTPS redirects to the Nextcloud login page.</li>
         </ul>
 
         <h3>Private Remote Access</h3>
         <ul>
             <li>Kept the intended remote access path on the existing WireGuard VPN rather than using public port forwarding or Cloudflare Tunnel.</li>
-            <li>Checked the ASUS router: port forwarding is <strong>OFF</strong>, the forwarding table is empty, and DMZ is disabled.</li>
-            <li>Verified remote access from a phone using 4G/mobile data with the WireGuard tunnel enabled; the HTTPS Nextcloud login page loads successfully without router port forwarding.</li>
+            <li>Checked the ASUS router: port forwarding was off, the forwarding table was empty, and DMZ was disabled.</li>
+            <li>Verified remote access from a phone using mobile data with the WireGuard tunnel enabled; the HTTPS Nextcloud login page loaded successfully without router port forwarding.</li>
         </ul>
 
-        <h3>Current Status — 11 October 2026, 1:45 PM SGT (UTC+8)</h3>
-        <p><strong>Working:</strong> Nextcloud AIO, Caddy reverse proxy, Let's Encrypt HTTPS certificate, and the Nextcloud login page at <code>https://cloud.dechozen1.stream</code>. Caddy is enabled as a systemd service and starts automatically.</p>
-        <p><strong>Network posture:</strong> ASUS port forwarding is disabled and DMZ is off. The intended remote route is the existing WireGuard VPN.</p>
-        <p><strong>Still to do:</strong> Plan how to make the existing 4TB media drive available without modifying or losing its current files.</p>
+        <h3>Existing 4TB Drive and External Storage</h3>
+        <ul>
+            <li>Preserved the existing Seagate 4TB media disk, formatted as exFAT. It is mounted on the Proxmox host at <code>/mnt/check4tb</code>; its media content must not be formatted or overwritten during future storage changes.</li>
+            <li>Created a restricted Samba share named <code>NextcloudMedia</code> on the Proxmox host, pointing to <code>/mnt/check4tb/English</code> and allowing the Nextcloud VM at <code>192.168.50.145</code>.</li>
+            <li>Mounted the SMB share in the Nextcloud VM at <code>/mnt/ncmedia-test</code> using CIFS. Read/list access was confirmed, and a direct SMB upload test succeeded.</li>
+            <li>Added the share to Nextcloud External Storage as <code>4TB Media</code>. The media folder listing appeared in Nextcloud.</li>
+            <li>During permission troubleshooting, the external-storage mount was checked from both the VM and the Nextcloud application container. A write test as <code>www-data</code> succeeded after restarting the relevant application container.</li>
+            <li>A web copy operation into <code>4TB Media/Movies</code> appeared to stall. The associated PHP-FPM worker was identified and sent <code>SIGTERM</code>; the worker exited. The destination should be inspected for partial files before retrying any transfer. Do not assume the interrupted copy was rolled back.</li>
+            <li>The CIFS mount and host mount are not yet confirmed as persistent across reboot. Persistence and a clean end-to-end folder-creation/copy test remain follow-up tasks.</li>
+        </ul>
+
+        <h3>Milestone Update — 14 October 2026, 12:49 AM SGT (UTC+8)</h3>
+        <p><strong>Status: Core service operational; migration and backup pending.</strong> Nextcloud AIO is running, the HTTPS login endpoint is available, and the existing 4TB media share is visible through Nextcloud External Storage. The service is ready for carefully staged migration work, but the interrupted copy needs a destination check and the storage mounts need persistence validation.</p>
+        <ul>
+            <li><strong>Operational:</strong> Proxmox-hosted Ubuntu VM, Nextcloud AIO, Caddy HTTPS reverse proxy and configured external SMB media storage.</li>
+            <li><strong>Pending data migration:</strong> OneDrive and Google Drive files have not yet been fully migrated and verified.</li>
+            <li><strong>Pending storage hardening:</strong> Add a second 4TB drive and implement a verified backup or redundancy plan.</li>
+            <li><strong>Safety note:</strong> A second disk in a ZFS mirror can provide single-drive-failure tolerance, but a separate backup is still needed to protect against accidental deletion, corruption or other unwanted changes.</li>
+        </ul>
+
+        <h3>Next Steps</h3>
+        <ol>
+            <li>Inspect <code>4TB Media/Movies</code> for partial results from the interrupted copy; compare source and destination before retrying.</li>
+            <li>Make the host exFAT mount and VM CIFS mount persistent, then reboot-test them carefully without formatting the existing disk.</li>
+            <li>Check the Nextcloud VM's actual filesystem and free space before choosing the destination for OneDrive and Google Drive migration.</li>
+            <li>Copy cloud data in stages and verify folder structure, file counts, file sizes and important files before deleting anything from the original cloud accounts.</li>
+            <li>Acquire a second 4TB drive and create a verified independent backup. Consider a ZFS mirror later if automatic tolerance of a single disk failure is desired.</li>
+            <li>Do not cancel OneDrive or Google Drive subscriptions until the migration is checked and the backup has been tested.</li>
+        </ol>
     </section>
 
     <section class="panel">
@@ -77,6 +106,8 @@
             <li>Deploying a self-hosted application with Docker-based AIO inside an Ubuntu VM.</li>
             <li>Reverse proxy configuration, DNS-01 certificate issuance and service permissions under systemd.</li>
             <li>Diagnosing DNS zone discovery and Linux directory traversal permissions.</li>
+            <li>Configuring Samba/CIFS external storage and troubleshooting access from the Nextcloud application container.</li>
+            <li>Planning cloud-data migration and separating high availability or disk redundancy from a real backup strategy.</li>
             <li>Keeping remote access private by using WireGuard and avoiding router port forwarding.</li>
         </ul>
         <p class="note">This page documents a personal homelab. No credentials, API tokens or confidential work information are published.</p>
