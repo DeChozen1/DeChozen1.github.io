@@ -48,14 +48,14 @@
         <ul>
             <li>Imported and configured the Nextcloud AIO appliance in an Ubuntu Server VM on Proxmox.</li>
             <li>Configured the AIO data directory as <code>/mnt/ncdata</code> and exposed its Apache backend on port <code>11000</code> for the reverse proxy.</li>
-            <li>Configured <code>cloud.dechozen1.stream</code> for Nextcloud access.</li>
+            <li>Configured <code>the private Nextcloud hostname</code> for Nextcloud access.</li>
             <li>Confirmed the AIO application containers were healthy after a stop/start through the AIO interface.</li>
         </ul>
 
         <h3>HTTPS, Caddy and Cloudflare DNS Challenge</h3>
         <ul>
             <li>Installed a custom Caddy build with the Cloudflare DNS provider plugin and configured Caddy to reverse-proxy requests to Nextcloud AIO.</li>
-            <li>Initial certificate attempts failed because the DNS provider tried to identify the zone as <code>stream.</code> instead of <code>dechozen1.stream</code>.</li>
+            <li>Initial certificate attempts failed because the DNS provider tried to identify the zone as <code>stream.</code> instead of <code>the configured DNS zone</code>.</li>
             <li>Added <code>resolvers 1.1.1.1</code> to the Caddy TLS configuration. The DNS-01 challenge then succeeded and Let's Encrypt issued the certificate.</li>
             <li>Fixed Caddy service access to its configuration by setting <code>/etc/caddy</code> to <code>root:caddy</code> mode <code>750</code> and the Caddyfile to <code>root:caddy</code> mode <code>640</code>. The Cloudflare token remains in a root-protected environment file loaded by systemd.</li>
             <li>Confirmed Caddy listens on ports <code>80</code> and <code>443</code>, while the Nextcloud AIO backend remains on <code>11000</code>. HTTPS redirects to the Nextcloud login page.</li>
