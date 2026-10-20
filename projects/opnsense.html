@@ -3,235 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Build log for a Proxmox-hosted OPNsense transparent bridge, covering interface mapping, live cutover, DHCP observations and management-access troubleshooting.">
     <title>OPNsense Firewall & Network | Siraj Hundal</title>
     <link rel="stylesheet" href="project-styles.css">
 </head>
-
 <body>
-
 <header class="site-header">
     <nav class="nav container">
-        <a class="brand" href="../index.html">
-            <span>SH</span>
-            <strong>Siraj Hundal</strong>
-        </a>
-
-        <a class="back" href="../index.html#projects">
-            ← Back to projects
-        </a>
+        <a class="brand" href="../index.html"><span>SH</span><strong>Siraj Hundal</strong></a>
+        <a class="back" href="../index.html#projects">← Back to projects</a>
     </nav>
 </header>
-
-
 <main class="container">
-
     <section class="hero">
-        <div class="eyebrow">ACTIVE</div>
-
+        <div class="eyebrow">ACTIVE · TROUBLESHOOTING</div>
         <h1>OPNsense Firewall & Network</h1>
-
-        <p class="lede">
-            Virtual firewall/router used to experiment with routing, DHCP,
-            DNS, IDS/IPS and multi-gig networking.
-        </p>
-
+        <p class="lede">A Proxmox-hosted OPNsense transparent-bridge project focused on observing live traffic, improving network visibility and keeping the firewall path separate from host management.</p>
         <div class="meta">
             <span class="tag">OPNsense</span>
-            <span class="tag">Routing</span>
+            <span class="tag">Proxmox VE</span>
+            <span class="tag">Transparent Bridge</span>
             <span class="tag">DHCP</span>
-            <span class="tag">IDS/IPS</span>
+            <span class="tag">Firewall Rules</span>
         </div>
     </section>
 
-
     <section class="panel">
         <h2>Overview</h2>
-
-        <p>
-            The OPNsense VM sits on the Dell T5810 and handles the routing
-            and security layer of the homelab. The project has included
-            interface and bridge configuration, DHCP/DNS work, monitoring
-            and IDS/IPS testing while troubleshooting connectivity between
-            the ISP, firewall, router and Proxmox management path.
-        </p>
+        <p>The project moved from initial virtual networking design to physical passthrough and a live cable cutover. The goal is to place OPNsense transparently between the upstream modem/ONT connection and the main router so traffic can be observed and controlled without replacing the existing router's role.</p>
+        <p><strong>Current milestone:</strong> The physical cutover has been attempted and DHCP activity has been observed on the bridge path. Management access previously became stale during the changes, and configuration adjustments were made to reduce that risk. Stable long-running operation still needs to be confirmed after these changes.</p>
+        <p>This public page deliberately omits internal IP addresses, MAC addresses, Wi-Fi identifiers, ISP account details and live firewall rules.</p>
     </section>
-
 
     <section class="panel">
-        <h2>Documentation</h2>
-
-        <h3>OPNsense Passthrough Configuration</h3>
-
-        <p>
-            OPNsense is being prepared as the primary firewall and routing
-            layer for the homelab. The current configuration work has focused
-            on moving the network interfaces required by OPNsense through
-            Proxmox so the virtual firewall can directly handle the relevant
-            network connections.
-        </p>
-
-        <p>
-            The passthrough configuration has been completed at the
-            virtualisation layer, but the physical connections have not yet
-            been moved over for live testing.
-        </p>
-
-
-        <h3>Current Network Architecture</h3>
-
-        <p>
-            The planned network path places OPNsense between the ISP connection
-            and the main ASUS router. The Dell T5810 provides the virtualisation
-            platform, while the dedicated network interfaces are being assigned
-            to the firewall VM.
-        </p>
-
-        <p>
-            The current design is intended to provide a clear separation between
-            the Proxmox management connection and the interfaces used by the
-            OPNsense firewall.
-        </p>
-
-
-        <h3>Implementation</h3>
-
+        <h2>Logical Interface Mapping</h2>
+        <p>The OPNsense VM uses three virtual interfaces, with the two bridge-facing interfaces separated from the management interface:</p>
         <ul>
-            <li>
-                Created the OPNsense virtual machine on Proxmox.
-            </li>
-
-            <li>
-                Configured the VM networking and required Proxmox interfaces.
-            </li>
-
-            <li>
-                Prepared the physical NICs for passthrough to the OPNsense VM.
-            </li>
-
-            <li>
-                Configured the required passthrough mapping within Proxmox.
-            </li>
-
-            <li>
-                Kept the Proxmox management interface separate from the
-                interfaces intended for OPNsense.
-            </li>
-
-            <li>
-                Prepared the environment for direct physical WAN/LAN testing.
-            </li>
+            <li><strong>vtnet0 · modem side:</strong> connected through the Proxmox bridge assigned to the upstream physical NIC.</li>
+            <li><strong>vtnet1 · router side:</strong> connected through a separate Proxmox bridge assigned to the downstream/router-facing physical NIC.</li>
+            <li><strong>vtnet2 · management:</strong> connected through the host's management bridge and onboard network interface.</li>
         </ul>
-
-
-        <h3>Planned Test</h3>
-
-        <p>
-            The next stage is to physically connect the network path and test
-            the complete firewall configuration rather than relying only on
-            the virtual configuration.
-        </p>
-
-        <p>
-            The planned test will verify whether OPNsense can successfully
-            receive the upstream connection, establish the LAN path and pass
-            traffic through to the ASUS router and connected clients.
-        </p>
-
-
-        <h3>What Will Be Tested</h3>
-
-        <ul>
-            <li>
-                WAN link detection and connectivity through OPNsense.
-            </li>
-
-            <li>
-                LAN connectivity from OPNsense to the downstream router.
-            </li>
-
-            <li>
-                DHCP and DNS behaviour through the new routing path.
-            </li>
-
-            <li>
-                Internet connectivity from client devices.
-            </li>
-
-            <li>
-                Proxmox management connectivity while the firewall is
-                operating as the network gateway.
-            </li>
-
-            <li>
-                IDS/IPS monitoring and traffic visibility once live traffic
-                is passing through the firewall.
-            </li>
-        </ul>
-
-
-        <h3>Current Status</h3>
-
-        <p>
-            Passthrough has been configured, but the physical network
-            cutover has not yet been performed. The firewall has therefore
-            not yet been validated as the live gateway for the homelab.
-        </p>
-
-        <p>
-            The next milestone is the physical connection and controlled
-            network test. The results of that test will be documented here,
-            including any routing, DHCP, DNS or connectivity issues discovered
-            during the cutover.
-        </p>
-
-
-        <h3>Lessons Learned So Far</h3>
-
-        <ul>
-            <li>
-                Virtual firewall projects require both correct VM configuration
-                and correct physical network connectivity.
-            </li>
-
-            <li>
-                Separating management networking from firewall interfaces makes
-                the Proxmox host easier to access during testing.
-            </li>
-
-            <li>
-                Passthrough configuration can be completed before the physical
-                cutover, allowing the network change to be tested in a
-                controlled manner.
-            </li>
-
-            <li>
-                The live test is necessary to validate the complete path from
-                the ISP connection through OPNsense to the internal network.
-            </li>
-        </ul>
-
-
-        <p class="note">
-            No confidential work information is published here. This
-            documentation describes my personal homelab environment and
-            implementation process.
-        </p>
+        <p>The intended separation is important: the two bridge-facing paths carry the traffic being inspected, while the management path should remain reachable independently during firewall changes.</p>
     </section>
 
+    <section class="panel">
+        <h2>Build Log and Troubleshooting</h2>
+        <h3>Proxmox passthrough and bridge preparation</h3>
+        <ul>
+            <li>Created the OPNsense VM and mapped the upstream and router-facing interfaces through separate Proxmox bridges.</li>
+            <li>Kept the management interface on the built-in NIC and management bridge rather than placing management access on either bridge-facing path.</li>
+            <li>Completed the VM-side passthrough/bridge configuration and proceeded to the physical cable cutover.</li>
+        </ul>
 
-    <a class="button primary"
-       href="https://github.com/DeChozen1"
-       target="_blank"
-       rel="noreferrer">
-        GitHub profile ↗
-    </a>
+        <h3>Live cutover and DHCP observations</h3>
+        <ul>
+            <li>Performed the physical network cutover instead of stopping at a virtual-only configuration.</li>
+            <li>Observed DHCP leases during the cutover, including an upstream-assigned lease appearing on the router-facing side and later changing.</li>
+            <li>The observed lease change was recorded as an observation, not treated as proof that the full bridge path was stable.</li>
+            <li>DHCP behaviour, end-to-end client connectivity and what each interface should learn from the upstream network still need a fresh check after the management changes.</li>
+        </ul>
 
+        <h3>Management access becoming stale</h3>
+        <p>During the cutover work, the management port became unresponsive or stale. Changes were made to the configuration to prevent a repeat, but the available notes do not establish a long enough stability test to mark the issue fully resolved.</p>
+        <p>Follow-up checks should confirm management access remains reachable while traffic crosses the bridge, and that a documented recovery path is available before further live rule or interface changes.</p>
+
+        <h3>Firewall visibility and blocklist</h3>
+        <ul>
+            <li>An active blocklist was created in OPNsense.</li>
+            <li>The next useful stage is to validate hits and firewall logs, then review whether expected devices are being logged or blocked as intended.</li>
+            <li>Planned learning includes inspecting traffic patterns from selected smart-home/IoT devices and applying conservative rules only after their normal behaviour has been observed.</li>
+        </ul>
+
+        <h3>Constraints and deferred work</h3>
+        <ul>
+            <li>VLAN segmentation remains constrained by the lack of a suitable managed switch in the current setup.</li>
+            <li>The transparent bridge should be treated as experimental until DHCP, client connectivity, management reachability and sustained throughput are reconfirmed.</li>
+            <li>Do not make simultaneous changes to the management path and bridge-facing firewall interfaces without a rollback plan.</li>
+        </ul>
+    </section>
+
+    <section class="panel">
+        <h2>Current State</h2>
+        <ul>
+            <li><strong>Configured:</strong> three-interface model with distinct modem-side, router-side and management paths.</li>
+            <li><strong>Attempted:</strong> physical cutover and live DHCP observation.</li>
+            <li><strong>Adjusted:</strong> management-access configuration after the management port became stale.</li>
+            <li><strong>Active:</strong> blocklist present, with traffic-log validation still needed.</li>
+            <li><strong>Not yet confirmed:</strong> long-duration stability, final DHCP behaviour and complete validation of the rule/blocklist effect.</li>
+        </ul>
+        <h3>Next validation sequence</h3>
+        <ol>
+            <li>Confirm the management interface is reachable before touching bridge-facing settings.</li>
+            <li>Verify link state and expected DHCP behaviour on both sides without publishing live lease details.</li>
+            <li>Test client connectivity through the existing router, then check logs for normal and blocked traffic.</li>
+            <li>Run a sustained connectivity/throughput check and confirm the host management connection remains stable.</li>
+            <li>Document the working configuration and recovery steps privately before introducing VLANs or more aggressive filtering.</li>
+        </ol>
+    </section>
+
+    <section class="panel">
+        <h2>Lessons Learned</h2>
+        <ul>
+            <li>Virtual interface mapping must be matched to the actual physical cable path; the VM's configuration alone does not prove the live topology.</li>
+            <li>Management reachability is a separate acceptance test and must be verified throughout a bridge cutover.</li>
+            <li>A DHCP lease changing is an observation to investigate, not enough by itself to establish whether the design is correct.</li>
+            <li>Blocklists should be validated against live logs before assuming that a device is being handled as intended.</li>
+            <li>Detailed internal addressing, interface identifiers and full rulesets belong in private operational notes, not the public portfolio.</li>
+        </ul>
+        <p class="note">This page describes a personal homelab project. It intentionally excludes internal IP addresses, MAC addresses, credentials and detailed live firewall rules.</p>
+    </section>
+    <a class="button primary" href="https://github.com/DeChozen1" target="_blank" rel="noreferrer">GitHub profile ↗</a>
 </main>
-
-
-<footer class="site-footer container">
-    © 2026 Siraj Hundal
-</footer>
-
+<footer class="site-footer container">© 2026 Siraj Hundal</footer>
 </body>
 </html>
