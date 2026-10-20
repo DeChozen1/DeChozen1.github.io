@@ -71,7 +71,7 @@
         <h3>Existing 4TB Drive and External Storage</h3>
         <ul>
             <li>Preserved the existing Seagate 4TB media disk, formatted as exFAT. It is mounted on the Proxmox host at <code>/mnt/check4tb</code>; its media content must not be formatted or overwritten during future storage changes.</li>
-            <li>Created a restricted Samba share named <code>NextcloudMedia</code> on the Proxmox host, pointing to <code>/mnt/check4tb/English</code> and allowing the Nextcloud VM at <code>192.168.50.145</code>.</li>
+            <li>Created a restricted Samba share named <code>NextcloudMedia</code> on the Proxmox host, pointing to <code>/mnt/check4tb/English</code> and allowing the Nextcloud VM at <code>the authorised Nextcloud VM</code>.</li>
             <li>Mounted the SMB share in the Nextcloud VM at <code>/mnt/ncmedia-test</code> using CIFS. Read/list access was confirmed, and a direct SMB upload test succeeded.</li>
             <li>Added the share to Nextcloud External Storage as <code>4TB Media</code>. The media folder listing appeared in Nextcloud.</li>
             <li>During permission troubleshooting, the external-storage mount was checked from both the VM and the Nextcloud application container. A write test as <code>www-data</code> succeeded after restarting the relevant application container.</li>
