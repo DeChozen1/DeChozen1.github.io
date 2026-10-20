@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Build log for Bucks, a self-hosted finance app covering monthly budgets, transactions, loans, savings goals and dashboard charts.">
+    <title>Bucks Finance | Siraj Hundal</title>
+    <link rel="stylesheet" href="project-styles.css">
+</head>
+<body>
+<header class="site-header">
+    <nav class="nav container">
+        <a class="brand" href="../index.html"><span>SH</span><strong>Siraj Hundal</strong></a>
+        <a class="back" href="../index.html#projects">← Back to projects</a>
+    </nav>
+</header>
+<main class="container">
+    <section class="hero">
+        <div class="eyebrow">ACTIVE · V2.2.1</div>
+        <h1>Bucks Finance</h1>
+        <p class="lede">A self-hosted personal finance application built to make monthly cash flow, category budgets, recurring obligations, loan balances and savings goals easier to track in one private place.</p>
+        <div class="meta">
+            <span class="tag">Python</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">SQLAlchemy</span>
+            <span class="tag">Docker Compose</span>
+            <span class="tag">Jinja2</span>
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2>Overview</h2>
+        <p>Bucks started as a small personal finance tool and has grown into a month-aware app with a dedicated transaction workflow, category budgets, fixed bills, loan payments, one-off commitments, plans and savings contributions. It runs as a containerised web application backed by PostgreSQL.</p>
+        <p><strong>Current milestone:</strong> Version 2.2.1 is running in the private homelab. The overview includes charts, and variable expenses are designed to flow through category budgets rather than being treated as fixed bills. The source is kept in a private repository.</p>
+        <p>The public project notes intentionally omit account balances, transaction history, internal host addresses and deployment credentials.</p>
+    </section>
+
+    <section class="panel">
+        <h2>Architecture</h2>
+        <ul>
+            <li><strong>Application:</strong> Python with FastAPI, server-rendered Jinja2 templates and custom CSS.</li>
+            <li><strong>Persistence:</strong> PostgreSQL with SQLAlchemy models for monthly records and finance workflows.</li>
+            <li><strong>Deployment:</strong> Docker Compose with separate application and database services, plus a persistent database volume.</li>
+            <li><strong>Configuration:</strong> Secrets and administrator credentials are provided through environment variables rather than stored in source code.</li>
+            <li><strong>Privacy:</strong> Intended for private self-hosting and access through the home network or VPN, not direct public exposure.</li>
+        </ul>
+    </section>
+
+    <section class="panel">
+        <h2>Implemented Features</h2>
+        <h3>Monthly overview and charts</h3>
+        <p>The dashboard brings income, bills, obligations and tracked spending into a single monthly view. Visual summaries include spending-category breakdowns, budget-versus-spent progress and an income-versus-outflow trend. Month selection is intended to keep records separated by period.</p>
+
+        <h3>Budgets and transactions</h3>
+        <p>Variable expenses such as groceries and fuel belong in monthly category budgets. Transactions are categorised, and eligible expenses reduce the matching budget for that month. Editing or recategorising a transaction should update the category totals rather than requiring a second manual adjustment.</p>
+
+        <h3>Bills and one-off commitments</h3>
+        <p>Predictable obligations remain separate from discretionary category budgets. One-off commitments have their own month and paid status so planned purchases or upcoming expenses can be tracked without turning every variable purchase into a bill.</p>
+
+        <h3>Loans, plans and savings</h3>
+        <p>Loan payments distinguish principal reduction from interest and retain payment history. Plans and savings funds track goals and contributions independently, helping avoid treating a contribution as both spending and available cash.</p>
+
+        <h3>Transaction import and export</h3>
+        <p>Transactions can be entered individually, imported from a CSV, and exported for personal record-keeping. Exported data is treated as sensitive and should stay out of source control.</p>
+    </section>
+
+    <section class="panel">
+        <h2>Build Log</h2>
+        <h3>Initial application</h3>
+        <p>The first version was built with FastAPI, SQLAlchemy and PostgreSQL, with a login screen and pages for salary, bills, loans, commitments, plans and transactions. Docker Compose separated the application from the database.</p>
+
+        <h3>Month-aware finance workflows</h3>
+        <p>The data model was expanded to preserve monthly bill and loan snapshots, one-off commitments and transaction records. Additive schema changes were used so existing records could be retained as new workflows were added.</p>
+
+        <h3>Budgets and dashboard</h3>
+        <p>Variable-spending budgets were introduced alongside transaction categories, with an overview designed to distinguish budget remaining from the projected monthly balance. Charts provide a quick visual view of allocation and spending trends.</p>
+
+        <h3>Operational safeguards</h3>
+        <ul>
+            <li>PostgreSQL data is stored in a persistent Docker volume.</li>
+            <li>Database and application-code backups are made before upgrades.</li>
+            <li>Example environment variables use placeholders; live secrets and financial records are excluded from the source repository.</li>
+            <li>Schema changes are designed to add new tables or fields rather than erase existing records.</li>
+        </ul>
+
+        <h3>Current Status</h3>
+        <p><strong>Active development · v2.2.1 running.</strong> The current milestone is a usable private finance tracker with budgets, transaction categorisation, loan and savings workflows, and a chart-based overview. Future work should focus on stronger authentication hardening, automated regression checks, import validation and documented recovery drills.</p>
+    </section>
+
+    <section class="panel">
+        <h2>Security and Privacy Notes</h2>
+        <ul>
+            <li>Do not commit environment files, credentials, database dumps, transaction exports or screenshots containing real financial data.</li>
+            <li>Keep the service on a trusted private network or VPN. Do not publish the live instance or expose its port directly to the Internet.</li>
+            <li>Use unique strong database, administrator and session secrets, and keep backups separate from the application source.</li>
+            <li>Before any untrusted or wider deployment, perform a dedicated security review of session configuration, authentication throttling, input validation and HTTPS settings.</li>
+        </ul>
+        <p class="note">This is a personal self-hosted project, not a regulated banking service or a hardened multi-user financial platform. The public page contains no real account data or private deployment details.</p>
+    </section>
+
+    <a class="button primary" href="https://github.com/DeChozen1" target="_blank" rel="noreferrer">GitHub profile ↗</a>
+</main>
+<footer class="site-footer container">© 2026 Siraj Hundal</footer>
+</body>
+</html>
